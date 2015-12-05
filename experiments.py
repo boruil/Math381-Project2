@@ -34,9 +34,7 @@ names = ['x_mcts_vs_o_random_1',
          'x_random_vs_o_random_2']
 
 
-def run_experiment(player_policies, experiment_name):
-    # Number of games to play per experiment
-    n = 100
+def run_experiment(player_policies, experiment_name, simulation_time):
 
     games = []
     winners = []
@@ -83,11 +81,11 @@ def run_experiment(player_policies, experiment_name):
     plt.xlabel('simulation')
     plt.ylabel('cumulative win rate')
     plt.ylim([-0.1, 1.1])
-    plt.title('Experiment ID: {}'.format(name.replace('_', ' ').upper()))
+    plt.title('Experiment ID: {}'.format(name.replace('_', ' ').upper()) + " simulation_time_ " + str(simulation_time))
 
     # Save figure to disk with a unique identifier
     import uuid
-    plt.savefig('{}.png'.format(experiment_name))
+    plt.savefig('{}'.format(experiment_name) + '_simulation_time_' + str(simulation_time) + '.png')
     # plt.show()
     plt.cla()
 
@@ -111,4 +109,7 @@ def run_experiment(player_policies, experiment_name):
     # dot_graph.write_png('multiple_game_graph_mcts_vs_random.png')
 
 for experiment, name in zip(experiments, names):
-    run_experiment(experiment, name)
+    # Different Number of games to play per experiment
+    experiments_num = [10, 50, 100, 150, 200]
+    for n in experiments_num:
+        run_experiment(experiment, name, n)
